@@ -1,5 +1,6 @@
 # Shadow-cljs + DFX
-Template for getting Clojurescript/shadow-cljs running with DFX 
+Template for getting Clojurescript/shadow-cljs running with DFX
+
 A simple counter app
 
 ## The Stack
@@ -8,7 +9,7 @@ A simple counter app
 
 ## Getting Started
 ```bash
-$ npx degit this_repo my_app_name
+$ npx degit https://github.com/mourginakis/shadowcljs-dfx-template my_app_name
 $ npm install
 ```
 Shadow-cljs has two types of builds - a development build that uses
