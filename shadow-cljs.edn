@@ -2,7 +2,7 @@
 {:source-paths
  ["src/counter_frontend/src/main"
   "src/counter_frontend/src/test"]
-
+ 
  :dependencies
  [[reagent "1.1.0"]]
 
@@ -15,5 +15,7 @@
    :build-hooks [(shadow.html/copy-file "src/counter_frontend/src/html/index.html" "dist/counter_frontend/index.html")]
    :output-dir "dist/counter_frontend/js"
    :asset-path "/js"
+   :js-options {:resolve {"counter-backend-did" {:target :file
+                                 :file "src/declarations/counter_backend/counter_backend.did.js"}}}
    :modules {:main
              {:init-fn counter.app/init}}}}}

@@ -1,7 +1,8 @@
 (ns counter.app
   (:require [reagent.core :as r]
             [reagent.dom  :as dom])
-  (:require ["hash.js" :as hashjs]))
+  (:require ["hash.js" :as hashjs]
+            ["/js/actor.js" :as actor]))
 
 (println "code reloaded!")
 
@@ -12,16 +13,27 @@
    [:h1 "A simple counter app!"]
    [:h3 "Calling a JS library from ClojureScript:"]
    [:p "sha256('abc') =>" (-> (hashjs/sha256) (.update "abc") (.digest "hex"))]
-   
+
    [:h3 "Current count:"]
    [:p @current-count]
-   
+
    [:button
     {:onClick (fn [] (swap! current-count inc))}
     "+1"]
    [:button
     {:onClick (fn [] (swap! current-count dec))}
-    "-1"]])
+    "-1"] 
+   
+   [:h3 "Calling the canister"] 
+   [:p "js import sanity check => " actor/sanityCheck] 
+   [:p "whoami => " (str "need to make this update on promise resolve")]
+   
+   ])
+
+;; works, needs to be moved into Application
+(.then (js/Promise.resolve (actor/sanityWhoAmI))
+       #(js/console.log %))
+
 
 
 (dom/render [Application] (js/document.getElementById "app"))
