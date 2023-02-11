@@ -1,0 +1,28 @@
+{
+  "canisters": {
+    "counter_backend": {
+      "main": "src/counter_backend/main.mo",
+      "type": "motoko"
+    },
+    "counter_frontend": {
+      "dependencies": [
+        "counter_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/counter_frontend/src/index.html"
+      },
+      "source": [
+        "src/counter_frontend/assets",
+        "dist/counter_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": "vessel sources"
+    }
+  },
+  "version": 1
+}
