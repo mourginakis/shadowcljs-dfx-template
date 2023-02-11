@@ -43,6 +43,7 @@ $ dfx start --background --clean
 
 # Run only the backend canister on a local replica
 $ dfx deploy counter_backend
+$ dfx generate counter_backend
 
 # Run the frontend from dist/ with the cljs runtime
 $ npx shadow-cljs watch app
