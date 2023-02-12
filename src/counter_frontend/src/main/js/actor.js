@@ -61,11 +61,3 @@ export const backend = createActor(canisterId, {
     host,
   },
 });
-
-export const sanityWhoAmI = async () => {
-  const principal = await backend.whoami();
-  return principal.toText();
-};
-
-
-export const sanityCheck = "You are not insane!";
