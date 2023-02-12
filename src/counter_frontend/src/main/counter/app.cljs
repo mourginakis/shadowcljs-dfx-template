@@ -14,64 +14,62 @@
    "Importing and calling a JS library from node_modules/ in ClojureScript:" [:br]
    [:p "sha256('abc') => " (-> (hashjs/sha256) (.update "abc") (.digest "hex"))]])
 
+
 (defonce current-count (r/atom 0))
 (defn Counter-Frontend []
   [:div [:h3 "Counter-Frontend"]
-   "This is a counter that stores state in an atom in the frontend" [:br]
+   "This is a counter that stores state in a global atom in the frontend" [:br]
    "Current Count: " @current-count [:br]
    [:button {:onClick (fn [] (swap! current-count inc))} "inc"]
    [:button {:onClick (fn [] (swap! current-count dec))} "dec"]])
 
 
-(defonce whoami-value (r/atom ""))
-
-(defn WhoAmI-Checker-Vanilla 
-  "Uses vanilla JS Promises"
-  []
-  [:div 
-   "js.promise whoami => " @whoami-value [:br]
-   [:button {:onClick
-             (fn [] 
-               (reset! whoami-value "loading...")
-               (-> (-> (js/Promise.resolve (.whoami backend)) (.then #(.toString %)))
-                   (.then #(reset! whoami-value %))
-                   (.catch #(reset! whoami-value "error"))
-                   (.finally #(js/console.log "whoami call finished"))))} 
-    "fetch"]
-   
-   [:button {:onClick (fn [] (reset! whoami-value ""))} "reset"]
-   ])
+;; using js promises
+(defn WhoAmI-Checker-Vanilla []
+  (let [whoami (r/atom "")
+        fetch-whoami 
+        (fn []
+          (reset! whoami "loading...")
+          (-> (-> (js/Promise.resolve (.whoami backend)) (.then #(.toString %)))
+              (.then #(reset! whoami %))
+              (.catch #(reset! whoami "error"))
+              (.finally #(js/console.log "whoami call finished"))))]
+    (fn [] 
+      [:div 
+       "js.promise whoami => " @whoami [:br]
+       [:button {:onClick fetch-whoami} "fetch"]
+       [:button {:onClick #(reset! whoami "")} "reset"]])))
 
 
-(defn WhoAmI-Checker-Async
-  "Uses core.async"
-  [] 
-  [:div
-   "core.async whoami => " @whoami-value [:br]
-   [:button {:onClick
-             (fn [] (go (reset! whoami-value "loading...")
-                        (reset! whoami-value (str (<p! (.whoami backend))))))} 
-    "fetch"]
-   
-   [:button {:onClick (fn [] (reset! whoami-value "clear"))} "reset"]
-   ])
+
+;; using core.async (preferred)
+(defn WhoAmI-Checker-Async []
+  (let [whoami (r/atom "")
+        fetch-whoami 
+        (fn [] (go (reset! whoami "loading...")
+                   (reset! whoami (str (<p! (.whoami backend))))))]
+    (fn []
+      [:div 
+       "core.async whoami => " @whoami [:br]
+       [:button {:onClick fetch-whoami       } "fetch"] 
+       [:button {:onClick #(reset! whoami "")} "reset"]])))
+
 
 
 (defn Counter-Backend []
   [:div [:h3 "Counter-Backend"] 
    "Calling the canister" [:br] [:br]
-   (WhoAmI-Checker-Vanilla) [:br]
-   (WhoAmI-Checker-Async) [:br]
+   [WhoAmI-Checker-Vanilla] [:br]
+   [WhoAmI-Checker-Async] [:br]
    "Current Count: " "Not Yet Implemented"])
 
 
 (defn Application []
   [:div
    [:h1 "A simple counter app!"] [:hr]
-   (JS-Library-Demo) [:hr]
-   (Counter-Frontend) [:hr]
-   (Counter-Backend) [:hr]
-   
+   [JS-Library-Demo] [:hr]
+   [Counter-Frontend] [:hr]
+   [Counter-Backend] [:hr] 
    ])
 
 

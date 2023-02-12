@@ -81,4 +81,5 @@ Access from the IC:
 
 - <https://shadow-cljs.github.io/docs/UsersGuide.html>
 - <https://ericnormand.me/guide/clojurescript-tutorial>
+- <https://reagent-project.github.io/>
 - <https://ericnormand.me/guide/reagent>
