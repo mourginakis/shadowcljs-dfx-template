@@ -1,5 +1,7 @@
 (ns counter.app
-  (:require [reagent.core :as r]
+  (:require [cljs.core.async :refer [go]]
+            [cljs.core.async.interop :refer-macros [<p!]]
+            [reagent.core :as r]
             [reagent.dom  :as dom])
   (:require ["hash.js" :as hashjs]
             ["/js/actor.js" :refer [backend]]))
@@ -27,7 +29,7 @@
   "Uses vanilla JS Promises"
   []
   [:div 
-   "whoami => " @whoami-value [:br]
+   "js.promise whoami => " @whoami-value [:br]
    [:button {:onClick
              (fn [] 
                (reset! whoami-value "loading...")
@@ -44,14 +46,22 @@
 (defn WhoAmI-Checker-Async
   "Uses core.async"
   [] 
-  [:div "Not yet implemented"])
+  [:div
+   "core.async whoami => " @whoami-value [:br]
+   [:button {:onClick
+             (fn [] (go (reset! whoami-value "loading...")
+                        (reset! whoami-value (str (<p! (.whoami backend))))))} 
+    "fetch"]
+   
+   [:button {:onClick (fn [] (reset! whoami-value "clear"))} "reset"]
+   ])
 
 
 (defn Counter-Backend []
   [:div [:h3 "Counter-Backend"] 
-   "Calling the canister" [:br]
-   (WhoAmI-Checker-Vanilla)
-   (WhoAmI-Checker-Async) 
+   "Calling the canister" [:br] [:br]
+   (WhoAmI-Checker-Vanilla) [:br]
+   (WhoAmI-Checker-Async) [:br]
    "Current Count: " "Not Yet Implemented"])
 
 
