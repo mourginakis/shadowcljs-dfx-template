@@ -22,6 +22,7 @@
    :closure-defines {counter.actor/dfx-network #shadow/env "DFX_NETWORK"}
 
    ;; this is needed for a release build, otherwise you'll get errors from the js imports
+   ;; https://lwhorton.github.io/2018/10/20/clojurescript-interop-with-javascript.html#advanced
    :compiler-options {:optimizations :simple}
 
    :modules {:main

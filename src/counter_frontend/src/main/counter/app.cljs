@@ -57,6 +57,7 @@
 
 
 
+
 (defn Counter-Backend []
   [:div [:h3 "Counter-Backend"] 
    "Calling the canister" [:br] [:br]
@@ -78,3 +79,12 @@
 
 (defn init []
   (println "The app has started"))
+
+(comment
+
+  ;; this only shows up in the js console
+  (go (let [val (<p! (.whoami backend))]
+        (prn val)))
+  
+)
+

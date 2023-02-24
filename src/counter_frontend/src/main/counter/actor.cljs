@@ -1,12 +1,10 @@
 (ns counter.actor
   (:require ["@dfinity/agent" :refer [Actor, HttpAgent]]
-            ["counter-backend-did" :refer [idlFactory]]
-            ["/js/actor.js" :refer [createActor]]))
+            ["counter-backend-did" :refer [idlFactory]]))
 
-;; would one day like to delete main/js/actor.js
-;; and completely replace it with this file.
-;; But I currently don't know enough cljs interop.
+;; create custom actor depending on local or mainnet environment
 
+;; set default
 (goog-define dfx-network "local")
 
 (def opts 
@@ -19,12 +17,16 @@
              :canisterId "g2mhx-fqaaa-aaaag-qb2xq-cai"
              :isDevelopment false}))
 
+(def localAgent (HttpAgent. #js {:host (:host opts)}))
+
+(when (:isDevelopment opts)
+  (.fetchRootKey localAgent))
 
 (def backend 
-  (createActor
-   (:isDevelopment opts)
-   (:canisterId opts)
-   (clj->js {:agentOptions {:host (:host opts)}})))
+  (.createActor Actor
+                idlFactory
+                (clj->js {:agent localAgent
+                          :canisterId (:canisterId opts)})))
 
 
 
