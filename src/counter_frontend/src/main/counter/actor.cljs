@@ -10,24 +10,21 @@
 (goog-define dfx-network "local")
 
 (def opts 
-  ;; will fix :temp once I get a grasp on how the interop works
   (case dfx-network
     "local" {:host "http://127.0.0.1:4943"
              :canisterId "rrkah-fqaaa-aaaaa-aaaaq-cai"
-             :isDevelopment true
-             :temp (js* "{ agentOptions: { host: 'http://127.0.0.1:4943' }}")}
+             :isDevelopment true}
     
     "ic"    {:host "https://ic0.app"
              :canisterId "g2mhx-fqaaa-aaaag-qb2xq-cai"
-             :isDevelopment false
-             :temp (js* "{ agentOptions: { host: 'https://ic0.app' }}")}))
+             :isDevelopment false}))
 
 
 (def backend 
   (createActor
    (:isDevelopment opts)
    (:canisterId opts)
-   (:temp opts)))
+   (clj->js {:agentOptions {:host (:host opts)}})))
 
 
 

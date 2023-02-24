@@ -19,7 +19,7 @@
                                                  :file "src/declarations/counter_backend/counter_backend.did.js"}}} 
    
    ;; dfx deploy will automatically set an environment variable 'DFX_NETWORK' to 'ic' or 'local'
-   :closure-defines {counter.actor/dfx-network #shadow/env ["DFX_NETWORK" :default "local"]}
+   :closure-defines {counter.actor/dfx-network #shadow/env "DFX_NETWORK"}
 
    ;; this is needed for a release build, otherwise you'll get errors from the js imports
    :compiler-options {:optimizations :simple}
