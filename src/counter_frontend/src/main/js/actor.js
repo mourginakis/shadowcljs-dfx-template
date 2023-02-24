@@ -24,7 +24,7 @@ import { Actor, HttpAgent } from "@dfinity/agent";
 
 import { idlFactory } from "counter-backend-did";
 
-export const createActor = (canisterId, options = {}) => {
+export const createActor = (isDevelopment, canisterId, options = {}) => {
   const agent = options.agent || new HttpAgent({ ...options.agentOptions });
   if (options.agent && options.agentOptions) {
     console.warn(
@@ -48,16 +48,3 @@ export const createActor = (canisterId, options = {}) => {
     ...options.actorOptions,
   });
 };
-
-
-// TODO: get these from environment variables instead of coding them in
-export const canisterId = "rrkah-fqaaa-aaaaa-aaaaq-cai";
-const isDevelopment = true;
-let host = "http://127.0.0.1:4943";
-
-
-export const backend = createActor(canisterId, {
-  agentOptions: {
-    host,
-  },
-});

@@ -3,8 +3,9 @@
             [cljs.core.async.interop :refer-macros [<p!]]
             [reagent.core :as r]
             [reagent.dom  :as dom])
-  (:require ["hash.js" :as hashjs]
-            ["/js/actor.js" :refer [backend]]))
+  (:require ["hash.js" :as hashjs] 
+            [counter.actor :refer [backend]]
+            ))
 
 (println "code reloaded!")
 

@@ -1,7 +1,8 @@
 {
   "name": "counter",
   "scripts": {
-    "build": "echo 'npm run build not yet implemented - skipping'"
+    "build": "shadow-cljs release app",
+    "prebuild": "rm -r dist/counter_frontend/*"
   },
   "version": "0.0.1",
   "private": true,
