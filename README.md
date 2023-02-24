@@ -1,7 +1,8 @@
 # Shadow-cljs + DFX
 Template for getting Clojurescript/shadow-cljs running with DFX
 
-A simple counter app
+A simple counter app  
+[Currently not fully functional]
 
 ## The Stack
  - motoko + shadow-cljs + reagent/react + ~~hiccup~~ + ~~tailwindcss~~
@@ -76,6 +77,10 @@ $ dfx deploy --network ic
 Access from the IC:  
 [https://{frontend_canister_id}.ic0.app](https://ic0.app)
 
+
+## Live Demo
+This canister is hosted at:
+<https://ehrj7-wyaaa-aaaag-qb2ya-cai.ic0.app/>
 
 ## Resources
 

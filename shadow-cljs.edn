@@ -4,7 +4,7 @@
   "src/counter_frontend/src/test"]
  
  :dependencies
- [[reagent "1.1.0"]]
+ [[reagent "1.2.0"]]
 
  :dev-http {8080 ["dist/counter_frontend" "src/counter_frontend/src"]}
  
@@ -16,6 +16,6 @@
    :output-dir "dist/counter_frontend/js"
    :asset-path "/js"
    :js-options {:resolve {"counter-backend-did" {:target :file
-                                 :file "src/declarations/counter_backend/counter_backend.did.js"}}}
+                                                 :file "src/declarations/counter_backend/counter_backend.did.js"}}} 
    :modules {:main
              {:init-fn counter.app/init}}}}}
