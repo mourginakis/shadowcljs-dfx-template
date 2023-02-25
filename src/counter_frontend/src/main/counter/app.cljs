@@ -2,7 +2,8 @@
   (:require [cljs.core.async :refer [go]]
             [cljs.core.async.interop :refer-macros [<p!]]
             [reagent.core :as r]
-            [reagent.dom  :as dom])
+            [reagent.dom  :as dom]
+            [reagent.dom.client :as rdomc])
   (:require ["hash.js" :as hashjs] 
             [counter.actor :refer [backend]]
             ))
@@ -75,7 +76,10 @@
    ])
 
 
-(dom/render [Application] (js/document.getElementById "app"))
+(defonce root 
+  (rdomc/create-root (js/document.getElementById "app")))
+(rdomc/render root [Application])
+
 
 (defn init []
   (println "The app has started"))
