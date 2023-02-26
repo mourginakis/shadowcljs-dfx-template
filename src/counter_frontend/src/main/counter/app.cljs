@@ -58,13 +58,37 @@
 
 
 
+(defn Counter-App []
+  ;; ideally each button would have its own object to make code cleaner
+  (let [count (r/atom "?") 
+        getCount-disabled? (r/atom false)
+        getCount (fn [] (go (reset! getCount-disabled? true)
+                            (reset! count (str (<p! (.getCount backend))))
+                            (reset! getCount-disabled? false)))
+        incrementCount-disabled? (r/atom false)
+        incrementCount (fn [] (go (reset! incrementCount-disabled? true) 
+                                  (reset! count (str (<p! (.incrementCount backend))))
+                                  (reset! incrementCount-disabled? false))) 
+        resetCount-disabled? (r/atom false)
+        resetCount (fn [] (go (reset! resetCount-disabled? true)
+                              (reset! count (str (<p! (.resetCount backend))))
+                              (reset! resetCount-disabled? false)))]
+     
+    (fn []
+      [:div 
+       "Current count [backend] => " @count [:br]
+       [:button {:onClick getCount :disabled @getCount-disabled? } "getCount"] [:br]
+       [:button {:onClick incrementCount :disabled @incrementCount-disabled?} "incrementCount"] [:br]
+       [:button {:onClick resetCount :disabled @resetCount-disabled?} "resetCount"]]))) 
+
+
 
 (defn Counter-Backend []
   [:div [:h3 "Counter-Backend"] 
    "Calling the canister" [:br] [:br]
    [WhoAmI-Checker-Vanilla] [:br]
    [WhoAmI-Checker-Async] [:br]
-   "Current Count: " "Not Yet Implemented"])
+   [Counter-App]])
 
 
 (defn Application []

@@ -4,7 +4,7 @@ actor {
 
     var counter : Nat = 0;
 
-    public func count() : async Nat {
+    public func incrementCount() : async Nat {
         counter += 1;
         counter
     };
@@ -13,7 +13,7 @@ actor {
         counter
     };
 
-    public func reset() : async Nat {
+    public func resetCount() : async Nat {
         counter := 0;
         counter
     };
