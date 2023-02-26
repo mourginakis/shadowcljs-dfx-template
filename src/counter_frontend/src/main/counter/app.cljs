@@ -58,28 +58,23 @@
 
 
 
-(defn Counter-App []
-  ;; ideally each button would have its own object to make code cleaner
-  (let [count (r/atom "?") 
-        getCount-disabled? (r/atom false)
-        getCount (fn [] (go (reset! getCount-disabled? true)
-                            (reset! count (str (<p! (.getCount backend))))
-                            (reset! getCount-disabled? false)))
-        incrementCount-disabled? (r/atom false)
-        incrementCount (fn [] (go (reset! incrementCount-disabled? true) 
-                                  (reset! count (str (<p! (.incrementCount backend))))
-                                  (reset! incrementCount-disabled? false))) 
-        resetCount-disabled? (r/atom false)
-        resetCount (fn [] (go (reset! resetCount-disabled? true)
-                              (reset! count (str (<p! (.resetCount backend))))
-                              (reset! resetCount-disabled? false)))]
-     
+(defn Fetch-Button [label external-state fetch-fn]
+  (let [disabled?   (r/atom false)
+        fetch-async (fn [] (go (reset! disabled? true)
+                               (reset! external-state (str (<p! (fetch-fn))))
+                               (reset! disabled? false)))]
+    (fn []
+      [:button {:onClick fetch-async :disabled @disabled?} label])))
+
+
+(defn Counter-App [] 
+  (let [count (r/atom "?")] 
     (fn []
       [:div 
        "Current count [backend] => " @count [:br]
-       [:button {:onClick getCount :disabled @getCount-disabled? } "getCount"] [:br]
-       [:button {:onClick incrementCount :disabled @incrementCount-disabled?} "incrementCount"] [:br]
-       [:button {:onClick resetCount :disabled @resetCount-disabled?} "resetCount"]]))) 
+       [Fetch-Button "getCount"       count (fn [] (.getCount backend))      ] [:br]
+       [Fetch-Button "incrementCount" count (fn [] (.incrementCount backend))] [:br]
+       [Fetch-Button "resetCount"     count (fn [] (.resetCount backend))    ]]))) 
 
 
 
