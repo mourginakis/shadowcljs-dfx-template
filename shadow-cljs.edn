@@ -23,7 +23,7 @@
 
    ;; :optimizations :simple may be needed for a release build, to avoid js import errors
    ;; https://lwhorton.github.io/2018/10/20/clojurescript-interop-with-javascript.html#advanced
-   :compiler-options {:optimizations :simple}
+   ;; :compiler-options {:optimizations :simple}
 
    :modules {:main
              {:init-fn counter.app/init}}}}}
