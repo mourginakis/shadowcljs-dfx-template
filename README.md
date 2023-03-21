@@ -4,7 +4,7 @@ Template for getting Clojurescript/shadow-cljs running with DFX
 A simple counter app  
 
 ## The Stack
- - motoko + shadow-cljs + reagent/react + ~~hiccup~~ + ~~tailwindcss~~
+ - motoko + shadow-cljs + reagent/react
 
 
 ## Getting Started
